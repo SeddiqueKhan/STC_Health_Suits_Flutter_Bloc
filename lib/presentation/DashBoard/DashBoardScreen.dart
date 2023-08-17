@@ -11,19 +11,44 @@ class DashBoardScreen extends StatefulWidget {
 }
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
-
   int _selectedIndex = 0;
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: [
-          HomeScreen(),
-          ProductDetailScreen(),
-          LoginScreen(),
-        ],
+      // body: IndexedStack(
+      //   index: _selectedIndex,
+      //   children: const [
+      //     HomeScreen(),
+      //     ProductDetailScreen(),
+      //     LoginScreen(),
+      //   ],
+      // ),
+      body: SizedBox.expand(
+        child: PageView(
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() => _selectedIndex = index);
+          },
+          children: const <Widget>[
+            HomeScreen(),
+            ProductDetailScreen(),
+            LoginScreen(),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -50,6 +75,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      _pageController.animateToPage(index,
+          duration: Duration(milliseconds: 500), curve: Curves.easeOut);
     });
   }
 }

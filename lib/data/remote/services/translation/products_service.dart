@@ -16,8 +16,7 @@ abstract class ProductsService {
 
   @GET("products/{Id}")
   Future<HttpResponse<ProductDetailsResponse>> hGetProductDetails(
-      @Path("Id") int productId,
-      );
+      @Path("Id") int productId,);
 }
 
 

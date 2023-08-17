@@ -125,15 +125,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     Center(
                       child: IconButton(
                           onPressed: () {
-                            // if (isExpanded == true) {
-                            //   setState(() {
-                            //     isExpanded = false;
-                            //   });
-                            // } else {
-                            //   setState(() {
-                            //     isExpanded = true;
-                            //   });
-                            // }
+                            if (isExpanded == true) {
+                              setState(() {
+                                isExpanded = false;
+                              });
+                            } else {
+                              setState(() {
+                                isExpanded = true;
+                              });
+                            }
                           },
                           icon: isExpanded
                               ? const Icon(Icons.keyboard_arrow_down)
