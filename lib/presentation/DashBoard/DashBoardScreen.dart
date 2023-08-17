@@ -19,7 +19,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     return Scaffold(
       body: IndexedStack(
         index: _selectedIndex,
-        children: const [
+        children: [
           HomeScreen(),
           ProductDetailScreen(),
           LoginScreen(),

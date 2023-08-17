@@ -24,7 +24,7 @@ class ProductDetailViewModel extends BaseViewModel{
   Future<void> getProductDetails() async {
     _setViewState(ViewState.loading());
     final httpResponse = await _getProductDetailsUseCase.call(
-        params: GetProductDetailsParams(3));
+        params: GetProductDetailsParams(4));
     if (httpResponse is DataSuccess) {
       debugPrint("${httpResponse.data?.price}");
       _setViewState(ViewState.complete(httpResponse.data!));

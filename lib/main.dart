@@ -11,19 +11,21 @@ import 'app/di/injector.dart';
 
 Future main() async {
   await initializeDependencies();
-  runApp(const MyApp());
+  runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+   MyApp({super.key});
 
   // This widget is the root of your application.
-  @override
+   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        // ChangeNotifierProvider(create: (_) => const DashBoardScreen()),
         ChangeNotifierProvider(create: (_) => HomeViewModel()),
-        ChangeNotifierProvider(create: (_) => ProductDetailViewModel())
+        ChangeNotifierProvider(create: (_) => ProductDetailViewModel()),
+        // ChangeNotifierProvider(create: (_) => const LoginScreen())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -32,7 +34,13 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const DashBoardScreen(),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const DashBoardScreen(),
+          'home': (context) => const HomeScreen(),
+          'productDetail': (context) => const ProductDetailScreen(),
+          'login': (context) => const LoginScreen()
+        }
       ),
     );
   }

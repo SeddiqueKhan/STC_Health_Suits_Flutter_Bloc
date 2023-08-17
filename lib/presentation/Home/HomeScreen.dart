@@ -9,7 +9,7 @@ import '../../app/di/injector.dart';
 import '../../data/remote/dio/data_state.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+   const HomeScreen({Key? key,}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
         return Container();
       case (ResponseState.COMPLETE):
         return Container(
-          child: Text(''),
+          child: Text('${homeViewModel.viewState.data?.products![0].title}'),
         );
       case (ResponseState.EMPTY):
         return Container();
