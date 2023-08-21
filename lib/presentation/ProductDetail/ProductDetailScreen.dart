@@ -160,7 +160,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
-                          height: 100,
+                          height: 150,
                           width: MediaQuery.of(context).size.width * 1,
                           color: Colors.grey.shade200,
                           child: Column(
