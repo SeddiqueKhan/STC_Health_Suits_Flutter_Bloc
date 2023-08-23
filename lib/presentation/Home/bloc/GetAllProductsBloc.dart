@@ -1,7 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../app/di/injector.dart';
 import '../../../domain/GetAllProducts/usecase/GetAllProductsUseCase.dart';
-import '../../../domain/GetAllProducts/usecase/GetProductDetailsUseCase.dart';
 import 'GetAllProductsEvent.dart';
 import 'GetAllProductsState.dart';
 

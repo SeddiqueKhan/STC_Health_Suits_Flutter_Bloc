@@ -12,7 +12,7 @@ class ProductDetailsBloc extends Bloc<ProductDetailsEvent, ProductDetailsState> 
       try {
         emit(ProductDetailsLoading());
         final httpResponse = await getProductDetailsUseCase.call(
-            params: GetProductDetailsParams(4));
+            params: GetProductDetailsParams(event.id));
         emit(ProductDetailsLoaded(httpResponse.data!));
         if (httpResponse.error != null) {
           emit(ProductDetailsError(httpResponse.error?.message));

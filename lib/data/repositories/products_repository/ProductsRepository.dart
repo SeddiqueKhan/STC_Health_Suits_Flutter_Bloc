@@ -12,7 +12,7 @@ class ProductsRepository{
 
   ProductsRepository(this._productsService);
 
-  Future<HttpResponse<GetAllProductsListResponse>> getAllProducts(GetAllProductsParams params) =>
+  Future<HttpResponse<GetAllProductsResponse>> getAllProducts(GetAllProductsParams params) =>
       _productsService.hGetAllProducts();
 
   Future<HttpResponse<ProductDetailsResponse>> getProductDetails(GetProductDetailsParams params) =>

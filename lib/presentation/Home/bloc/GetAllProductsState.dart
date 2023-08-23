@@ -14,7 +14,7 @@ class GetAllProductsInitial extends GetAllProductsState {}
 class GetAllProductsLoading extends GetAllProductsState {}
 
 class GetAllProductsLoaded extends GetAllProductsState {
-  final GetAllProductsListModel getAllProductsListModel;
+  final GetAllProductsModel getAllProductsListModel;
   const GetAllProductsLoaded(this.getAllProductsListModel);
 }
 

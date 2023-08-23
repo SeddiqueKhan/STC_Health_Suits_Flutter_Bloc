@@ -4,18 +4,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stc_health_suits/domain/GetAllProducts/model/GetAllProductsModel.dart';
 import 'package:stc_health_suits/presentation/Home/bloc/GetAllProductsBloc.dart';
 import 'package:stc_health_suits/presentation/Home/bloc/GetAllProductsEvent.dart';
-
+import 'package:stc_health_suits/presentation/ProductDetail/ProductDetailScreen.dart';
 import 'bloc/GetAllProductsState.dart';
 
 class HomeScreen extends StatefulWidget {
-   const HomeScreen({Key? key,}) : super(key: key);
+  const HomeScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   final GetAllProductsBloc _getAllProductsBloc = GetAllProductsBloc();
 
   @override
@@ -23,7 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
     _getAllProductsBloc.add(GetAllProducts());
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
   _loading() {
     return const Center(
       child: Column(
@@ -77,9 +76,48 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-   _buildOnComplete(BuildContext context, GetAllProductsListModel getAllProductsListModel) {
-    return Container(
-      child: Text(getAllProductsListModel.products[0].description),
+  _buildOnComplete(
+      BuildContext context, GetAllProductsModel getAllProductsModel) {
+    return ListView.builder(
+      itemCount: getAllProductsModel.products?.length,
+      itemBuilder: (BuildContext context, int index) {
+        var product = getAllProductsModel.products?[index];
+        return _card(product);
+      },
     );
-   }
+  }
+
+  _card(Products? product) {
+    return GestureDetector(
+      child: Card(
+        color: Colors.yellow[50],
+        elevation: 4.0,
+        margin: const EdgeInsets.all(10.0),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Image.network(
+                '${product?.images![0]}',
+                height: MediaQuery.of(context).size.width * (3 / 4),
+                width: MediaQuery.of(context).size.width,
+              ),
+            ),
+            Text(
+              '${product?.title}',
+              style: const TextStyle(
+                fontSize: 30.0,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ],
+        ),
+      ),
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailScreen(id: product?.id??0)));
+        debugPrint("clicked");
+      },
+    );
+  }
 }

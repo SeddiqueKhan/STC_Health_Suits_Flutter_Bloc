@@ -45,7 +45,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           },
           children: const <Widget>[
             HomeScreen(),
-            ProductDetailScreen(),
+            // ProductDetailScreen(),
+            LoginScreen(),
             LoginScreen(),
           ],
         ),

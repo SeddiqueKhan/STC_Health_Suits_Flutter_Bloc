@@ -12,7 +12,7 @@ abstract class ProductsService {
   factory ProductsService(Dio dio) = _ProductsService;
 
   @GET(GET_ALL_PRODUCTS)
-  Future<HttpResponse<GetAllProductsListResponse>> hGetAllProducts();
+  Future<HttpResponse<GetAllProductsResponse>> hGetAllProducts();
 
   @GET("products/{Id}")
   Future<HttpResponse<ProductDetailsResponse>> hGetProductDetails(

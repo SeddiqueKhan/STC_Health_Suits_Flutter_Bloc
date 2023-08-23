@@ -1,62 +1,56 @@
 class ProductDetailsModel {
   int? id;
   String? title;
-  double? price;
   String? description;
+  int? price;
+  dynamic? discountPercentage;
+  dynamic? rating;
+  int? stock;
+  String? brand;
   String? category;
-  String? image;
-  Rating? rating;
+  String? thumbnail;
+  List<String>? images;
 
   ProductDetailsModel(
       {this.id,
         this.title,
-        this.price,
         this.description,
+        this.price,
+        this.discountPercentage,
+        this.rating,
+        this.stock,
+        this.brand,
         this.category,
-        this.image,
-        this.rating});
+        this.thumbnail,
+        this.images});
 
   ProductDetailsModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
-    price = json['price'];
     description = json['description'];
+    price = json['price'];
+    discountPercentage = json['discountPercentage'];
+    rating = json['rating'];
+    stock = json['stock'];
+    brand = json['brand'];
     category = json['category'];
-    image = json['image'];
-    rating =
-    json['rating'] != null ? new Rating.fromJson(json['rating']) : null;
+    thumbnail = json['thumbnail'];
+    images = json['images'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['title'] = this.title;
-    data['price'] = this.price;
     data['description'] = this.description;
+    data['price'] = this.price;
+    data['discountPercentage'] = this.discountPercentage;
+    data['rating'] = this.rating;
+    data['stock'] = this.stock;
+    data['brand'] = this.brand;
     data['category'] = this.category;
-    data['image'] = this.image;
-    if (this.rating != null) {
-      data['rating'] = this.rating!.toJson();
-    }
-    return data;
-  }
-}
-
-class Rating {
-  double? rate;
-  int? count;
-
-  Rating({this.rate, this.count});
-
-  Rating.fromJson(Map<String, dynamic> json) {
-    rate = json['rate'];
-    count = json['count'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['rate'] = this.rate;
-    data['count'] = this.count;
+    data['thumbnail'] = this.thumbnail;
+    data['images'] = this.images;
     return data;
   }
 }

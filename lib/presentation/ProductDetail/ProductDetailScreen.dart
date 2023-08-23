@@ -8,7 +8,8 @@ import 'package:stc_health_suits/presentation/ProductDetail/bloc/ProductDetailsS
 import 'bloc/ProductDetailsBloc.dart';
 
 class ProductDetailScreen extends StatefulWidget {
-  const ProductDetailScreen({Key? key}) : super(key: key);
+  final int id;
+  const ProductDetailScreen({Key? key, required this.id}) : super(key: key);
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -22,7 +23,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   @override
   void initState() {
-    _productDetailsBloc.add(GetProductDetails());
+    _productDetailsBloc.add(GetProductDetails(id: widget.id));
     super.initState();
   }
 
@@ -78,7 +79,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 child: Stack(
                   children: [
                     Image.network(
-                      '${productDetailsModel?.image}',
+                      '${productDetailsModel.images![0]}',
                       fit: BoxFit.fill,
                       height: double.infinity,
                       width: double.infinity,
@@ -87,7 +88,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       top: 20, // adjust the top position as needed
                       left: 20, // adjust the left position as needed
                       child: ElevatedButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white, // Background color
                         ),
@@ -98,18 +101,18 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         label: Text(''),
                       ),
                     ),
-                    Positioned(
-                      top: 20, // adjust the top position as needed
-                      right: 20, // adjust the right position as needed
-                      child: ElevatedButton.icon(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white, // Background color
-                        ),
-                        icon: const Icon(Icons.menu, color: Colors.black),
-                        label: const Text(''),
-                      ),
-                    ),
+                    // Positioned(
+                    //   top: 20, // adjust the top position as needed
+                    //   right: 20, // adjust the right position as needed
+                    //   child: ElevatedButton.icon(
+                    //     onPressed: () {},
+                    //     style: ElevatedButton.styleFrom(
+                    //       backgroundColor: Colors.white, // Background color
+                    //     ),
+                    //     icon: const Icon(Icons.menu, color: Colors.black),
+                    //     label: const Text(''),
+                    //   ),
+                    // ),
                     Positioned(
                         bottom: 10,
                         left: 20,
@@ -181,14 +184,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  "Reviews (${productDetailsModel?.rating?.count})",
+                                  "Reviews (${productDetailsModel?.rating})",
                                   style: TextStyle(fontSize: 20),
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  "${productDetailsModel?.rating?.rate}",
+                                  "Stock available (${productDetailsModel?.stock})",
                                   style: const TextStyle(
                                       fontSize: 30, fontWeight: FontWeight.bold),
                                 ),

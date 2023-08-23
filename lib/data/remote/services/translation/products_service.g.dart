@@ -19,13 +19,13 @@ class _ProductsService implements ProductsService {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<GetAllProductsListResponse>> hGetAllProducts() async {
+  Future<HttpResponse<GetAllProductsResponse>> hGetAllProducts() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<GetAllProductsListResponse>>(Options(
+        _setStreamType<HttpResponse<GetAllProductsResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -41,7 +41,7 @@ class _ProductsService implements ProductsService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = GetAllProductsListResponse.fromJson(_result.data! as List);
+    final value = GetAllProductsResponse.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
