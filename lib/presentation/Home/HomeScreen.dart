@@ -1,10 +1,13 @@
-import 'package:flutter/cupertino.dart';
+
+
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stc_health_suits/domain/GetAllProducts/model/GetAllProductsModel.dart';
-import 'package:stc_health_suits/presentation/Home/bloc/GetAllProductsBloc.dart';
-import 'package:stc_health_suits/presentation/Home/bloc/GetAllProductsEvent.dart';
-import 'package:stc_health_suits/presentation/ProductDetail/ProductDetailScreen.dart';
+
+import '../../domain/GetAllProducts/model/GetAllProductsModel.dart';
+import '../ProductDetail/ProductDetailScreen.dart';
+import 'bloc/GetAllProductsBloc.dart';
+import 'bloc/GetAllProductsEvent.dart';
 import 'bloc/GetAllProductsState.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -121,8 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
   _card(Products? product) {
     return GestureDetector(
       child: Card(
-        color: Colors.yellow[50],
-        elevation: 4.0,
+        color: Colors.white,
         margin: const EdgeInsets.all(10.0),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: Column(

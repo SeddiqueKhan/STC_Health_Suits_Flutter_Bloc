@@ -1,8 +1,11 @@
+
+
 import 'package:flutter/material.dart';
-import 'package:stc_health_suits/presentation/Cart/bloc/CartScreen.dart';
-import 'package:stc_health_suits/presentation/Home/HomeScreen.dart';
-import 'package:stc_health_suits/presentation/Login/LoginScreen.dart';
-import 'package:stc_health_suits/presentation/ProductDetail/ProductDetailScreen.dart';
+import 'package:flutter/widgets.dart';
+
+import '../Cart/bloc/CartScreen.dart';
+import '../Home/HomeScreen.dart';
+import '../Login/LoginScreen.dart';
 
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({Key? key}) : super(key: key);
@@ -30,14 +33,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // body: IndexedStack(
-      //   index: _selectedIndex,
-      //   children: const [
-      //     HomeScreen(),
-      //     ProductDetailScreen(),
-      //     LoginScreen(),
-      //   ],
-      // ),
       body: SizedBox.expand(
         child: PageView(
           controller: _pageController,
@@ -68,12 +63,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+        onTap: onItemTapped,
       ),
     );
   }
 
-  void _onItemTapped(int index) {
+  void onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
       _pageController.animateToPage(index,

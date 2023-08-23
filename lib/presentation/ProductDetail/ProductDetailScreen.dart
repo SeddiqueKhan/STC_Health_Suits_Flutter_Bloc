@@ -1,11 +1,13 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stc_health_suits/domain/GetAllProducts/model/ProductDetailsModel.dart';
-import 'package:stc_health_suits/presentation/ProductDetail/bloc/ProductDetailsEvent.dart';
-import 'package:stc_health_suits/presentation/ProductDetail/bloc/ProductDetailsState.dart';
 
+
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../domain/GetAllProducts/model/ProductDetailsModel.dart';
 import 'bloc/ProductDetailsBloc.dart';
+import 'bloc/ProductDetailsEvent.dart';
+import 'bloc/ProductDetailsState.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final int id;
