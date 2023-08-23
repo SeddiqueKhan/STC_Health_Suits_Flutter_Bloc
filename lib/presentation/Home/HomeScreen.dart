@@ -78,12 +78,43 @@ class _HomeScreenState extends State<HomeScreen> {
 
   _buildOnComplete(
       BuildContext context, GetAllProductsModel getAllProductsModel) {
-    return ListView.builder(
-      itemCount: getAllProductsModel.products?.length,
-      itemBuilder: (BuildContext context, int index) {
-        var product = getAllProductsModel.products?[index];
-        return _card(product);
-      },
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            floating: true,
+            pinned: true,
+            snap: false,
+            centerTitle: false,
+            title: const Text('Shop Now', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.shopping_cart),
+                onPressed: () {},
+              ),
+            ],
+            bottom: AppBar(
+              title: Container(
+                width: double.infinity,
+                height: 40,
+                color: Colors.white,
+                child: const Center(
+                  child: TextField(
+                    decoration: InputDecoration(
+                        hintText: 'Search for something',
+                        prefixIcon: Icon(Icons.search),
+                        ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SliverList(delegate: SliverChildBuilderDelegate((context, index) {
+            var product = getAllProductsModel.products?[index];
+            return _card(product);
+          }))
+        ],
+      ),
     );
   }
 
@@ -107,15 +138,19 @@ class _HomeScreenState extends State<HomeScreen> {
             Text(
               '${product?.title}',
               style: const TextStyle(
-                fontSize: 30.0,
+                fontSize: 25.0,
                 fontWeight: FontWeight.w700,
               ),
             ),
           ],
         ),
       ),
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailScreen(id: product?.id??0)));
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    ProductDetailScreen(id: product?.id ?? 0)));
         debugPrint("clicked");
       },
     );

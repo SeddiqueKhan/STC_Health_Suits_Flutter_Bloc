@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stc_health_suits/presentation/Cart/bloc/CartScreen.dart';
 import 'package:stc_health_suits/presentation/Home/HomeScreen.dart';
 import 'package:stc_health_suits/presentation/Login/LoginScreen.dart';
 import 'package:stc_health_suits/presentation/ProductDetail/ProductDetailScreen.dart';
@@ -45,8 +46,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           },
           children: const <Widget>[
             HomeScreen(),
-            // ProductDetailScreen(),
-            LoginScreen(),
+            CartScreen(),
             LoginScreen(),
           ],
         ),
@@ -77,7 +77,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     setState(() {
       _selectedIndex = index;
       _pageController.animateToPage(index,
-          duration: Duration(milliseconds: 500), curve: Curves.easeOut);
+          duration: const Duration(milliseconds: 500), curve: Curves.easeOut);
     });
   }
 }

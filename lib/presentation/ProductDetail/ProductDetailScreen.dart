@@ -212,13 +212,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
    _loading() {
-    return const Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CircularProgressIndicator(),
-        ],
-      ),
-    );
+    return const SafeArea(
+        child: Scaffold(
+            body: Center(child: CircularProgressIndicator())
+        ));
   }
 }

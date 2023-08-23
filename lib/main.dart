@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stc_health_suits/presentation/Cart/bloc/CartScreen.dart';
 import 'package:stc_health_suits/presentation/DashBoard/DashBoardScreen.dart';
 import 'package:stc_health_suits/presentation/Home/HomeScreen.dart';
 import 'package:stc_health_suits/presentation/Login/LoginScreen.dart';
@@ -29,7 +30,8 @@ class MyApp extends StatelessWidget {
         '/': (context) => const DashBoardScreen(),
         'home': (context) => const HomeScreen(),
         'productDetail': (context) => const ProductDetailScreen(id: 0),
-        'login': (context) => const LoginScreen()
+        'login': (context) => const LoginScreen(),
+        'cart': (context) => const CartScreen(),
       }
     );
   }
