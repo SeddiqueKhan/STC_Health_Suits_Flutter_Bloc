@@ -1,79 +1,61 @@
+class Products {
+  int id;
+  String title;
+  String description;
+  double price;
+  String category;
+  String image;
+
+  Products({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.price,
+    required this.category,
+    required this.image,
+  });
+
+  factory Products.fromJson(Map<String, dynamic> json) {
+    return Products(
+      id: json['id'] as int,
+      title: json['title'] as String,
+      description: json['description'] as String,
+      price: json['price'].toDouble(),
+      category: json['category'] as String,
+      image: json['image'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'price': price,
+      'category': category,
+      'image': image,
+    };
+  }
+}
+
 class GetAllProductsListModel {
-  final List<Products> products;
+  List<Products> products;
 
   GetAllProductsListModel({
     required this.products,
   });
 
-  factory GetAllProductsListModel.fromJson(List<dynamic> jsonList) {
-    List<Products> products = jsonList.map((json) => Products.fromJson(json)).toList();
-    return GetAllProductsListModel(products: products);
-  }
-  Map<String, dynamic> toJson() {
-    return {
-      'products': products.map((product) => product.toJson()).toList(),
-    };
-  }
-}
-class Products {
-  int? id;
-  String? title;
-  double? price;
-  String? description;
-  String? category;
-  String? image;
-  Rating? rating;
-
-  Products({
-    this.id,
-    this.title,
-    this.price,
-    this.description,
-    this.category,
-    this.image,
-    this.rating,
-  });
-
-  Products.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    title = json['title'];
-    price = json['price'];
-    description = json['description'];
-    category = json['category'];
-    image = json['image'];
-    rating =
-    json['rating'] != null ? new Rating.fromJson(json['rating']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['title'] = this.title;
-    data['price'] = this.price;
-    data['description'] = this.description;
-    data['category'] = this.category;
-    data['image'] = this.image;
-    if (this.rating != null) {
-      data['rating'] = this.rating!.toJson();
+  factory GetAllProductsListModel.fromJson(List<dynamic> json) {
+    List<Products> productList = [];
+    for (var productJson in json) {
+      productList.add(Products.fromJson(productJson));
     }
-    return data;
+    return GetAllProductsListModel(products: productList);
   }
-}
-class Rating {
-  double? rate;
-  int? count;
-
-  Rating({this.rate, this.count});
-
-  Rating.fromJson(Map<String, dynamic> json) {
-    rate = json['rate'];
-    count = json['count'];
-  }
-
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['rate'] = this.rate;
-    data['count'] = this.count;
-    return data;
+    List<Map<String, dynamic>> productJsonList = products.map((product) => product.toJson()).toList();
+    return {
+      'products': productJsonList,
+    };
   }
 }

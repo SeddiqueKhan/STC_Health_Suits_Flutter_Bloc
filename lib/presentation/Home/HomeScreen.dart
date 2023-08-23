@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:stacked/stacked.dart';
-import 'package:stc_health_suits/core/view_state.dart';
-import 'package:stc_health_suits/domain/GetAllProducts/usecase/GetAllProductsUseCase.dart';
-import 'package:stc_health_suits/presentation/Home/HomeViewModel.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stc_health_suits/domain/GetAllProducts/model/GetAllProductsModel.dart';
+import 'package:stc_health_suits/presentation/Home/bloc/GetAllProductsBloc.dart';
+import 'package:stc_health_suits/presentation/Home/bloc/GetAllProductsEvent.dart';
 
-import '../../app/di/injector.dart';
-import '../../data/remote/dio/data_state.dart';
+import 'bloc/GetAllProductsState.dart';
 
 class HomeScreen extends StatefulWidget {
    const HomeScreen({Key? key,}) : super(key: key);
@@ -17,44 +16,70 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  HomeViewModel homeViewModel = HomeViewModel();
+  final GetAllProductsBloc _getAllProductsBloc = GetAllProductsBloc();
+
+  @override
+  void initState() {
+    _getAllProductsBloc.add(GetAllProducts());
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<HomeViewModel>.reactive(
-        viewModelBuilder: () => homeViewModel,
-        onViewModelReady: (viewModel){
-          viewModel.getAllProducts();
-        },
-        builder: (context, viewModel, child) {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text(
-                'All Products',
-                style: TextStyle(
-                    color: Colors.black87,
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold),
-              ),
-              centerTitle: true,
-            ),
-            body: _buildBody()
-          );
-        });
+    return _buildBody();
   }
 
-  _buildBody() {
-    switch(homeViewModel.viewState.state){
-      case (ResponseState.LOADING):
-        return Container();
-      case (ResponseState.COMPLETE):
-        return Container(
-          child: Text('${homeViewModel.viewState.data?.products![0].title}'),
-        );
-      case (ResponseState.EMPTY):
-        return Container();
-      case (ResponseState.ERROR):
-        return Container();
-    }
+  Widget _buildBody() {
+    return Container(
+      margin: const EdgeInsets.all(8.0),
+      child: BlocProvider(
+        create: (_) => _getAllProductsBloc,
+        child: BlocListener<GetAllProductsBloc, GetAllProductsState>(
+          listener: (context, state) {
+            if (state is GetAllProductsError) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.message!),
+                ),
+              );
+            }
+          },
+          child: BlocBuilder<GetAllProductsBloc, GetAllProductsState>(
+            builder: (context, state) {
+              if (state is GetAllProductsInitial) {
+                return _loading();
+              } else if (state is GetAllProductsLoading) {
+                return _loading();
+              } else if (state is GetAllProductsLoaded) {
+                return _buildOnComplete(context, state.getAllProductsListModel);
+              } else if (state is GetAllProductsError) {
+                return Container();
+              } else {
+                return Container();
+              }
+            },
+          ),
+        ),
+      ),
+    );
   }
+
+
+  _loading() {
+    return const Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircularProgressIndicator(),
+        ],
+      ),
+    );
+  }
+
+   _buildOnComplete(BuildContext context, GetAllProductsListModel getAllProductsListModel) {
+    return Container(
+      child: Text(getAllProductsListModel.products[0].description),
+    );
+   }
 }

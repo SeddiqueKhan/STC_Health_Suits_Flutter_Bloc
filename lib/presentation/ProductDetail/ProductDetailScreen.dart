@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:stacked/stacked.dart';
-import 'package:stc_health_suits/core/view_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stc_health_suits/domain/GetAllProducts/model/ProductDetailsModel.dart';
-import 'package:stc_health_suits/presentation/Home/HomeScreen.dart';
-import 'package:stc_health_suits/presentation/ProductDetail/ProductDetailViewModel.dart';
+import 'package:stc_health_suits/presentation/ProductDetail/bloc/ProductDetailsEvent.dart';
+import 'package:stc_health_suits/presentation/ProductDetail/bloc/ProductDetailsState.dart';
+
+import 'bloc/ProductDetailsBloc.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   const ProductDetailScreen({Key? key}) : super(key: key);
@@ -15,46 +15,58 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
-  ProductDetailViewModel productDetailViewModel = ProductDetailViewModel();
+
+  final ProductDetailsBloc _productDetailsBloc = ProductDetailsBloc();
 
   bool isExpanded = false;
 
   @override
+  void initState() {
+    _productDetailsBloc.add(GetProductDetails());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<ProductDetailViewModel>.reactive(
-        viewModelBuilder: () => productDetailViewModel,
-        onViewModelReady: (viewModel) {
-          viewModel.getProductDetails();
-        },
-        builder: (context, viewModel, child) {
-          return _buildBody(viewModel, context);
-        });
+          return _buildBody();
   }
 
-  Widget _buildBody(ProductDetailViewModel viewModel, BuildContext context) {
-    switch (viewModel.viewState.state) {
-      case (ResponseState.LOADING):
-        return Scaffold(
-          body: Center(
-            child: CircularPercentIndicator(
-              radius: 60.0,
-              lineWidth: 5.0,
-              percent: 1.0,
-              center: const Text("Loading"),
-              progressColor: Colors.blue,
-            ),
+  Widget _buildBody() {
+    return Container(
+      margin: const EdgeInsets.all(8.0),
+      child: BlocProvider(
+        create: (_) => _productDetailsBloc,
+        child: BlocListener<ProductDetailsBloc, ProductDetailsState>(
+          listener: (context, state) {
+            if (state is ProductDetailsError) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.message!),
+                ),
+              );
+            }
+          },
+          child: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
+            builder: (context, state) {
+              if (state is ProductDetailsInitial) {
+                return _loading();
+              } else if (state is ProductDetailsLoading) {
+                return _loading();
+              } else if (state is ProductDetailsLoaded) {
+                return _buildOnComplete(context, state.productDetailsModel);
+              } else if (state is ProductDetailsError) {
+                return Container();
+              } else {
+                return Container();
+              }
+            },
           ),
-        );
-      case (ResponseState.COMPLETE):
-        return _buildOnComplete(viewModel.viewState.data);
-      case (ResponseState.EMPTY):
-        return Container();
-      case (ResponseState.ERROR):
-        return Container();
-    }
+        ),
+      ),
+    );
   }
 
-  _buildOnComplete(ProductDetailsModel? data) {
+  _buildOnComplete(BuildContext context, ProductDetailsModel productDetailsModel) {
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -66,7 +78,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 child: Stack(
                   children: [
                     Image.network(
-                      '${data?.image}',
+                      '${productDetailsModel?.image}',
                       fit: BoxFit.fill,
                       height: double.infinity,
                       width: double.infinity,
@@ -102,7 +114,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         bottom: 10,
                         left: 20,
                         child: Text(
-                          "${data?.price} AED",
+                          "${productDetailsModel?.price} AED",
                           style: const TextStyle(
                               fontSize: 35,
                               fontWeight: FontWeight.bold,
@@ -150,7 +162,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Text(
-                        "${data?.description}",
+                        "${productDetailsModel?.description}",
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -169,14 +181,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  "Reviews (${data?.rating?.count})",
+                                  "Reviews (${productDetailsModel?.rating?.count})",
                                   style: TextStyle(fontSize: 20),
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  "${data?.rating?.rate}",
+                                  "${productDetailsModel?.rating?.rate}",
                                   style: const TextStyle(
                                       fontSize: 30, fontWeight: FontWeight.bold),
                                 ),
@@ -192,6 +204,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+   _loading() {
+    return const Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircularProgressIndicator(),
+        ],
       ),
     );
   }
