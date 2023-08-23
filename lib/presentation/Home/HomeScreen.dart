@@ -112,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          SliverList(delegate: SliverChildBuilderDelegate((context, index) {
+          SliverList(delegate: SliverChildBuilderDelegate(childCount: getAllProductsModel.products?.length,(context, index) {
             var product = getAllProductsModel.products?[index];
             return _card(product);
           }))
