@@ -7,3 +7,6 @@ const String rBaseUrl = 'https://dummyjson.com/';
 
 const GET_ALL_PRODUCTS = 'products';
 const GET_PRODUCTS_DETAIL = 'products/1';
+
+const SAVE_EMAIL = 'email';
+const SAVE_PASSWORD = 'password';

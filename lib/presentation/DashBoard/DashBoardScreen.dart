@@ -1,11 +1,9 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
+import 'package:stc_health_suits/presentation/Auth/AuthScreen.dart';
+import '../Auth/Login/LoginScreen.dart';
 import '../Cart/bloc/CartScreen.dart';
 import '../Home/HomeScreen.dart';
-import '../Login/LoginScreen.dart';
 
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({Key? key}) : super(key: key);
@@ -42,7 +40,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           children: const <Widget>[
             HomeScreen(),
             CartScreen(),
-            LoginScreen(),
+            AuthScreen(),
           ],
         ),
       ),

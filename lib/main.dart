@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:stc_health_suits/presentation/Auth/Login/LoginScreen.dart';
 import 'package:stc_health_suits/presentation/Cart/bloc/CartScreen.dart';
 import 'package:stc_health_suits/presentation/DashBoard/DashBoardScreen.dart';
 import 'package:stc_health_suits/presentation/Home/HomeScreen.dart';
-import 'package:stc_health_suits/presentation/Login/LoginScreen.dart';
 import 'package:stc_health_suits/presentation/ProductDetail/ProductDetailScreen.dart';
 
 import 'app/di/injector.dart';
