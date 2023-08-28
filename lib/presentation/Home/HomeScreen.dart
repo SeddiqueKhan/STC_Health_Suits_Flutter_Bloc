@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stc_health_suits/app/sharedPrefs/SharedPrefs.dart';
+import 'package:stc_health_suits/common/constants.dart';
 
 import '../../domain/GetAllProducts/model/GetAllProductsModel.dart';
 import '../ProductDetail/ProductDetailScreen.dart';
@@ -22,9 +24,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final GetAllProductsBloc _getAllProductsBloc = GetAllProductsBloc();
 
+  SharedPrefss sharedPrefss = SharedPrefss();
+
   @override
   void initState() {
     _getAllProductsBloc.add(GetAllProducts());
+    sharedPrefss.removeValues(SAVE_EMAIL);
     super.initState();
   }
 

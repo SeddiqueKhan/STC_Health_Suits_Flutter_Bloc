@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const DashBoardScreen(),
+        '/': (context) =>  DashBoardScreen(key: dashboardKey),
         'home': (context) => const HomeScreen(),
         'productDetail': (context) => const ProductDetailScreen(id: 0),
         'login': (context) => const LoginScreen(),
