@@ -14,11 +14,11 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
 
   SharedPrefss sharedPrefss = SharedPrefss();
-  Future? _checkUser;
+  late Future<bool>? _checkUser;
 
   @override
   void initState() {
-    _checkUser = sharedPrefss.getStringValuesSF(SAVE_EMAIL);
+    _checkUser = sharedPrefss.getStringValuesSF(SAVE_PHONE);
     super.initState();
   }
   @override
@@ -26,11 +26,15 @@ class _AuthScreenState extends State<AuthScreen> {
     return FutureBuilder(
       future: _checkUser,
       builder: (ctx, snapshot){
-        if(snapshot.hasData){
+        if(snapshot.data == true){
           return const ProfileScreen();
         }
-        else{
+        else if(snapshot.data == false){
+
           return const LoginScreen();
+        }
+        else{
+          return Container();
         }
       },
     );

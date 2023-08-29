@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stc_health_suits/app/sharedPrefs/SharedPrefs.dart';
@@ -20,9 +21,15 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
 
-  TextEditingController _emailTextEditingController = TextEditingController();
+  TextEditingController _phoneTextEditingController = TextEditingController();
   TextEditingController _passwordTextEditingController = TextEditingController();
 
+  @override
+  void dispose() {
+    _phoneTextEditingController.dispose();
+    _passwordTextEditingController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,12 +89,13 @@ class _LoginScreenState extends State<LoginScreen> {
                            height: 100,
                            width: 300,
                            child: TextField(
-                             controller: _emailTextEditingController,
+                             controller: _phoneTextEditingController,
                              // onChanged: (value){
                              //   _emailTextEditingController.text = value;
                              // },
+                               maxLength: 11,
                              decoration: const InputDecoration(
-                                 labelText: 'Email',
+                                 labelText: 'Phone Number',
                                  border: InputBorder.none,
                                  suffixIcon: Icon(Icons.check_circle_outline)),
                            ),
@@ -102,6 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                            //   _passwordTextEditingController.text = value;
                            // },
                            obscureText: true,
+                           maxLength: 20,
                            decoration: const InputDecoration(
                                labelText: 'Password',
                                border: InputBorder.none,
@@ -144,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                  return TextButton(
                                      onPressed: () async {
                                        BlocProvider.of<LoginBloc>(context).add(
-                                           Login(email: _emailTextEditingController.text, password: _passwordTextEditingController.text));
+                                           Login(phone: _phoneTextEditingController.text, password: _passwordTextEditingController.text));
                                      },
                                      child: const Text(
                                        "Login",
@@ -161,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                return TextButton(
                                    onPressed: () async {
                                      BlocProvider.of<LoginBloc>(context).add(
-                                         Login(email: _emailTextEditingController.text, password: _passwordTextEditingController.text));
+                                         Login(phone: _phoneTextEditingController.text, password: _passwordTextEditingController.text));
                                    },
                                    child: const Text(
                                      "Login",

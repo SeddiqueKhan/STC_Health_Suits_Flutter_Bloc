@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     _getAllProductsBloc.add(GetAllProducts());
-    sharedPrefss.removeValues(SAVE_EMAIL);
+    sharedPrefss.removeValues(SAVE_PHONE);
     super.initState();
   }
 

@@ -2,27 +2,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stc_health_suits/app/sharedPrefs/SharedPrefs.dart';
 import '../../../../common/constants.dart';
-import 'LoginEvent.dart';
-import 'LoginState.dart';
+import 'ProfileEvent.dart';
+import 'ProfileState.dart';
 
-class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc() : super(LoginInitial()) {
+class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
+  ProfileBloc() : super(ProfileInitial()) {
 
-    on<Login>((event, emit) async {
+    on<Profile>((event, emit) async {
       SharedPrefss sharedPrefss = SharedPrefss();
-      emit(LoginLoading());
+      emit(ProfileLoading());
       try {
         if(event.phone.isEmpty && event.password.isEmpty)
           {
-            emit(const LoginError("Enter login credentials to login"));
+            emit(const ProfileError("Enter login credentials to login"));
           }
         else{
           await sharedPrefss.addStringToSF(SAVE_PHONE, event.phone);
           await sharedPrefss.addStringToSF(SAVE_PASSWORD, event.password);
-          emit(LoginLoaded());
+          emit(ProfileLoaded());
         }
       } catch(e) {
-        emit(const LoginError("Failed to load. is your device online?"));
+        emit(const ProfileError("Failed to load. is your device online?"));
       }
 
     });
